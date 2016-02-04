@@ -1,0 +1,12 @@
+{
+  "ID":"c9c4d78081f512a5b07e851f22j21s32",
+  "ActionKeyword":"manong",
+  "Name":"manong weekly",
+  "Description":"码农周刊",
+  "Author":"nevermoi",
+  "Version":"0.0.1",
+  "Language":"python",
+  "Website":"https://github.com/shuson/wox-plugin-manong-weekly",
+  "IcoPath": "img\\manong.png",
+  "ExecuteFileName":"manong.py"
+}
