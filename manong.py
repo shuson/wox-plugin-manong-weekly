@@ -20,7 +20,7 @@ def full2half(uc):
 
 
 class Main(Wox):
-  
+
     def request(self,url):
 	#get system proxy if exists
         if self.proxy and self.proxy.get("enabled") and self.proxy.get("server"):
@@ -38,12 +38,12 @@ class Main(Wox):
         bs = BeautifulSoup(r.content, 'html.parser')
 
         return bs.find('div', class_='menu').find('a')['href']
-    
+
     def query(self, param):
         url = self.getLastestIssue(ROOT_URL)
         if re.match('^\d+$', param.strip()):
             url = ISSUE_URL + param.strip()
-        
+
 	r = self.request(url)
 	r.encoding = 'utf-8'
 	bs = BeautifulSoup(r.content, 'html.parser')
@@ -53,10 +53,11 @@ class Main(Wox):
 	for p in posts:
             ptitle = p.find('a').string
             plink = p.find('a')['href']
+            user = p.find('small')
             psubtitle = p.next_sibling.next_sibling.string
             item = {
-                'Title': u'{subject}'.format(subject=full2half(ptitle)),
-                'SubTitle': psubtitle,
+                'Title': u'{subject} by {user}'.format(subject=full2half(ptitle), user=user.string if user else ""),
+                'SubTitle': psubtitle if psubtitle else "enter to open",
                 'IcoPath': os.path.join('img', 'manong.png'),
                 'JsonRPCAction': {
                     'method': 'open_url',
@@ -64,9 +65,9 @@ class Main(Wox):
                 }
             }
             result.append(item)
-        
+
 	return result
-    
+
     def open_url(self, url):
 	webbrowser.open(url)
 
