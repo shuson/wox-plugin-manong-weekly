@@ -43,12 +43,15 @@ class Main(Wox):
         url = self.getLastestIssue(ROOT_URL)
         if re.match('^\d+$', param.strip()):
             url = ISSUE_URL + param.strip()
-        
+            
 	r = self.request(url)
 	r.encoding = 'utf-8'
 	bs = BeautifulSoup(r.content, 'html.parser')
 	posts = bs.select('h4')
 
+        if not param.strip() or int(param.strip()) > 110:
+            posts.remove(posts[0])
+        
 	result = []
 	for p in posts:
             ptitle = p.find('a').string
